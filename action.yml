@@ -12,6 +12,7 @@ runs:
   using: 'composite'
   steps:
     - name: XTP CI
+      shell: bash
       run: |
         node dist/index.js ${{ inputs.action }}
 
