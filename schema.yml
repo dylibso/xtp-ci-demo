@@ -6,13 +6,66 @@ imports:
       type: string
       description: The URL of the repo to clone
       contentType: text/plain; charset=utf-8
-exports:
-  checkRepo:
+    output:
+      contentType: application/json
+      $ref: "#/components/schemas/CheckResult"
+  fail:
+    description: Fail CI run
     input:
       type: string
+      description: A message to print before exiting
       contentType: text/plain; charset=utf-8
-      description: The input string
     output:
+      contentType: application/json
+      $ref: "#/components/schemas/CheckResult"
+exports:
+  checkRepo:
+    description: Check an entire repo
+    input:
+      description: Information about the current repo
+      $ref: "#/components/schemas/RepoInfo"
+      contentType: application/json
+    output:
+      description: Result object
+      $ref: "#/components/schemas/CheckResult"
+      contentType: application/json
+  checkFiles:
+    description: Check one file at a time
+    input:
+      description: Information about the current repo
+      $ref: "#/components/schemas/RepoInfo"
+      contentType: application/json
+    output:
+      description: Result object
+      $ref: "#/components/schemas/CheckResult"
+      contentType: application/json
+components:
+  schemas:
+    RepoInfo:
+      description: Information about the repo
+      properties:
+        sha:
+          description: Git SHA
+          type: string
+        branch:
+          description: Git branch name
+          type: string
+        inputFile:
+          description: Path to file being checked
+          type: string
+          nullable: true
+    Status:
+      description: Enumeration of possible status outcomes
       type: string
-      contentType: text/plain; charset=utf-8
-      description: The input string
+      enum:
+        - Success
+        - Fail
+    CheckResult:
+      description: Result of running a check
+      properties:
+        status:
+          description: Check status
+          $ref: "#/components/schemas/Status"
+        message:
+          description: Result message
+          type: string

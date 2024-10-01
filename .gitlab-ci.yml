@@ -1,0 +1,2 @@
+include:
+  - component: $CI_SERVER_FQDN/$CI_PROJECT_PATH/xtp-ci@$CI_COMMIT_SHA

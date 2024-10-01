@@ -50,13 +50,17 @@ function gitBranch(platform: Platform): string {
 function getCommonFunctions(): object {
   return {
     "extism:host/user": {
-      "clone": function(plugin: CurrentPlugin, repo: bigint){
-        const repoUrl = plugin.read(repo)!.text();
-        spawnSync("git", ["clone", repoUrl]); 
+      "clone": function(plugin: CurrentPlugin, repo: bigint): bigint {
+        return BigInt(0);
+        // const repoUrl = plugin.read(repo)!.text();
+        // spawnSync("git", ["clone", repoUrl]);
+        // return plugin.store(JSON.stringify({message: "Ok", status: "success"})); 
       },
-      "fail": function(plugin: CurrentPlugin, msg: bigint){
-        console.error(plugin.read(msg)!.text());
-        process.exit(1);
+      "fail": function(plugin: CurrentPlugin, msg: bigint): bigint {
+        // console.error(plugin.read(msg)!.text());
+        // process.exit(1);
+        return BigInt(0);
+
       }
     }
   };
@@ -82,6 +86,16 @@ export class Repo {
     // case Platform.Gitlab:
     // }
     return funcs;
+  }
+
+  info(): object {
+    return {sha: this.sha, branch: this.branch};
+  }
+
+  infoWithFile(filename: string): object {
+    const x = this.info();
+    x['inputFile'] = filename;
+    return x;
   }
 }
 
