@@ -17,6 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./
+        with:
+          action: checkRepo
         env:
           XTP_TOKEN: ${{ secrets.XTP_TOKEN }}
           XTP_APP_ID: ${{ secrets.XTP_APP_ID }}

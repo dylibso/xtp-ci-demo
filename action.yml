@@ -1,10 +1,10 @@
 name: 'xtp-ci'
 description: 'Run XTP plugins'
-# inputs:
-#   who-to-greet:  # id of input
-#     description: 'Who to greet'
-#     required: true
-#     default: 'World'
+inputs:
+  action:
+    description: Which action to run
+    required: true
+    default: checkRepo
 # outputs:
 #   time: # id of output
 #     description: 'The time we greeted you'

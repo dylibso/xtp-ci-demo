@@ -1,8 +1,8 @@
 spec:
   inputs:
-    stage:
-      default: test
+    action:
+      default: checkRepo
 ---
 xtp-ci:
   image: node:latest
-  script: node dist/index.js
+  script: node dist/index.js $[[ inputs.stage ]]
