@@ -7,13 +7,13 @@ import { Repo } from './repo'
 import walk from 'ignore-walk'
 
 enum Status {
-  Success = "success",
-  Failure = "failure"
+  Success = "Success",
+  Fail = "Fail"
 }
 
 type CheckResult = {message: string, status: Status}
 
-const defaultResult: CheckResult = {message: "No plugin found", status: Status.Failure};
+const defaultResult: CheckResult = {message: "No plugin found", status: Status.Fail};
 
 function validateAction(action: string) {
   if (action !== 'checkRepo' && action !== 'checkFiles'){
@@ -44,10 +44,10 @@ async function run(action: string) {
   if (action === 'checkRepo'){
     await call(f, repo);
   } else if (action === 'checkFiles'){
-    const files = await walk({path: "."});
+    const files = await walk({ignoreFiles: [".gitignore"]});
 
     for(var file of files){
-      console.log(`Checking ${file}`);
+      console.info(`Checking ${file}`);
       await call(f, repo, file)
     }
 
@@ -56,7 +56,7 @@ async function run(action: string) {
 
 async function call(f: any, repo: Repo, file?: string) {
   let info: object;
-  if (file !== undefined){
+  if (file === undefined){
     info = repo.info();
   } else {
     info = repo.infoWithFile(file);
@@ -64,7 +64,7 @@ async function call(f: any, repo: Repo, file?: string) {
 
   try {
     const res = await f(GUEST_KEY, JSON.stringify(info), {default: defaultResult});
-    if (res.status === Status.Failure){
+    if (res.status === Status.Fail){
       console.error(res.message);
       process.exit(1);
     }
@@ -75,6 +75,7 @@ async function call(f: any, repo: Repo, file?: string) {
 
   } catch(e) {
     console.error(e);
+    process.exit(2);
   }
 
 }

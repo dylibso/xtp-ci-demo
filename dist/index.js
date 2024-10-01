@@ -33,10 +33,10 @@ const repo_1 = __nccwpck_require__(8057);
 const ignore_walk_1 = __importDefault(__nccwpck_require__(2840));
 var Status;
 (function (Status) {
-    Status["Success"] = "success";
-    Status["Failure"] = "failure";
+    Status["Success"] = "Success";
+    Status["Fail"] = "Fail";
 })(Status || (Status = {}));
-const defaultResult = { message: "No plugin found", status: Status.Failure };
+const defaultResult = { message: "No plugin found", status: Status.Fail };
 function validateAction(action) {
     if (action !== 'checkRepo' && action !== 'checkFiles') {
         throw new Error(`Invalid action: ${action}`);
@@ -59,19 +59,18 @@ async function run(action) {
     const f = client.extensionPoints["xtp-ci"][action];
     if (action === 'checkRepo') {
         await call(f, repo);
-        console.log("BBB");
     }
     else if (action === 'checkFiles') {
-        const files = await (0, ignore_walk_1.default)({ path: "." });
+        const files = await (0, ignore_walk_1.default)({ ignoreFiles: [".gitignore"] });
         for (var file of files) {
-            console.log(`Checking ${file}`);
+            console.info(`Checking ${file}`);
             await call(f, repo, file);
         }
     }
 }
 async function call(f, repo, file) {
     let info;
-    if (file !== undefined) {
+    if (file === undefined) {
         info = repo.info();
     }
     else {
@@ -79,7 +78,7 @@ async function call(f, repo, file) {
     }
     try {
         const res = await f(env_1.GUEST_KEY, JSON.stringify(info), { default: defaultResult });
-        if (res.status === Status.Failure) {
+        if (res.status === Status.Fail) {
             console.error(res.message);
             process_1.default.exit(1);
         }
@@ -89,6 +88,7 @@ async function call(f, repo, file) {
     }
     catch (e) {
         console.error(e);
+        process_1.default.exit(2);
     }
 }
 const action = validateAction(process_1.default.argv[2] || 'checkRepo');

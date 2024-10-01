@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npx tsc && npx ncc build dist/index.js --license licenses.txt",
-    "test": "node ./dist/index.js checkRepo"
+    "test": "node ./dist/index.js"
   },
   "author": "",
   "license": "ISC",
