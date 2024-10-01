@@ -16,7 +16,7 @@ type CheckResult = {message: string, status: Status}
 const defaultResult: CheckResult = {message: "No plugin found", status: Status.Fail};
 
 function validateAction(action: string) {
-  if (action !== 'checkRepo' && action !== 'checkFiles'){
+  if (action !== 'checkRepo' && action !== 'scanFiles'){
     throw new Error(`Invalid action: ${action}`);
   }
 
@@ -43,7 +43,7 @@ async function run(action: string) {
 
   if (action === 'checkRepo'){
     await call(f, repo);
-  } else if (action === 'checkFiles'){
+  } else if (action === 'scanFiles'){
     const files = await walk({ignoreFiles: [".gitignore"]});
 
     for(var file of files){

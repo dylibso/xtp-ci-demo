@@ -38,8 +38,8 @@ use base64_serde::base64_serde_type;
 base64_serde_type!(Base64Standard, base64::engine::general_purpose::STANDARD);
 
 #[no_mangle]
-pub extern "C" fn checkFiles() -> i32 {
-    let ret = crate::check_files(try_input_json!()).and_then(|x| output(Json(x)));
+pub extern "C" fn scanFiles() -> i32 {
+    let ret = crate::scan_files(try_input_json!()).and_then(|x| output(Json(x)));
 
     match ret {
         Ok(()) => 0,
@@ -85,6 +85,32 @@ pub struct RepoInfo {
 
 #[derive(Serialize, Deserialize, FromBytes, ToBytes)]
 #[encoding(Json)]
+pub struct ShellArgs {
+    // Shell command
+    #[serde(rename = "command")]
+    pub command: Vec<String>,
+    // Working directory
+    #[serde(rename = "dir")]
+    #[serde(default)]
+    pub dir: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, FromBytes, ToBytes)]
+#[encoding(Json)]
+pub struct ShellResult {
+    // Exit code
+    #[serde(rename = "exitCode")]
+    pub exit_code: i64,
+    // Stderr
+    #[serde(rename = "stderr")]
+    pub stderr: String,
+    // Stdout
+    #[serde(rename = "stdout")]
+    pub stdout: String,
+}
+
+#[derive(Serialize, Deserialize, FromBytes, ToBytes)]
+#[encoding(Json)]
 pub enum Status {
     #[serde(rename = "Success")]
     Success,
@@ -97,31 +123,17 @@ mod raw_imports {
     #[host_fn]
     extern "ExtismHost" {
 
-        pub(crate) fn clone(input: String) -> Json<CheckResult>;
-
-        pub(crate) fn fail(input: String) -> Json<CheckResult>;
+        pub(crate) fn shell(input: Json<ShellArgs>) -> Json<ShellResult>;
 
     }
 }
 
-// clone Clone a Git repo
-// It takes input of String (The URL of the repo to clone)
-// And it returns an output CheckResult (Result of running a check)
+// shell Execute a shell command
+// It takes input of ShellArgs (Shell command arguments)
+// And it returns an output ShellResult (Result of a call to `shell`)
 #[allow(unused)]
-pub(crate) fn clone(input: String) -> Result<CheckResult, extism_pdk::Error> {
-    let res = unsafe { raw_imports::clone(input)? };
-
-    let Json(res) = res;
-
-    Ok(res)
-}
-
-// fail Fail CI run
-// It takes input of String (A message to print before exiting)
-// And it returns an output CheckResult (Result of running a check)
-#[allow(unused)]
-pub(crate) fn fail(input: String) -> Result<CheckResult, extism_pdk::Error> {
-    let res = unsafe { raw_imports::fail(input)? };
+pub(crate) fn shell(input: ShellArgs) -> Result<ShellResult, extism_pdk::Error> {
+    let res = unsafe { raw_imports::shell(Json(input))? };
 
     let Json(res) = res;
 

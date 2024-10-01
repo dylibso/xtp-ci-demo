@@ -1,23 +1,13 @@
 version: v1-draft
 imports:
-  clone:
-    description: Clone a Git repo
+  shell:
+    description: Execute a shell command
     input:
-      type: string
-      description: The URL of the repo to clone
-      contentType: text/plain; charset=utf-8
+      contentType: application/json
+      $ref: "#/components/schemas/ShellArgs"
     output:
       contentType: application/json
-      $ref: "#/components/schemas/CheckResult"
-  fail:
-    description: Fail CI run
-    input:
-      type: string
-      description: A message to print before exiting
-      contentType: text/plain; charset=utf-8
-    output:
-      contentType: application/json
-      $ref: "#/components/schemas/CheckResult"
+      $ref: "#/components/schemas/ShellResult"
 exports:
   checkRepo:
     description: Check an entire repo
@@ -29,7 +19,7 @@ exports:
       description: Result object
       $ref: "#/components/schemas/CheckResult"
       contentType: application/json
-  checkFiles:
+  scanFiles:
     description: Check one file at a time
     input:
       description: Information about the current repo
@@ -41,6 +31,30 @@ exports:
       contentType: application/json
 components:
   schemas:
+    ShellArgs:
+      description: Shell command arguments
+      properties:
+        command:
+          description: Shell command
+          type: array
+          items:
+            type: string
+        dir:
+          description: Working directory
+          type: string
+          nullable: true
+    ShellResult:
+      description: Result of a call to `shell`
+      properties:
+        stdout:
+          description: Stdout
+          type: string
+        stderr:
+          description: Stderr
+          type: string
+        exitCode:
+          description: Exit code
+          type: number
     RepoInfo:
       description: Information about the repo
       properties:

@@ -50,18 +50,13 @@ function gitBranch(platform: Platform): string {
 function getCommonFunctions(): object {
   return {
     "extism:host/user": {
-      "clone": function(plugin: CurrentPlugin, repo: bigint): bigint {
-        return BigInt(0);
-        // const repoUrl = plugin.read(repo)!.text();
-        // spawnSync("git", ["clone", repoUrl]);
-        // return plugin.store(JSON.stringify({message: "Ok", status: "success"})); 
+      "shell": function(plugin: CurrentPlugin, args: bigint): bigint {
+        const a = plugin.read(args)!.json();
+        const res = spawnSync(a.command[0], a.command.slice(1), {cwd: a["dir"]});
+        const decoder = new TextDecoder();
+        const j = {stdout: decoder.decode(res.stdout), stderr: decoder.decode(res.stderr), exitCode: res.status || -1};
+        return plugin.store(JSON.stringify(j));  
       },
-      "fail": function(plugin: CurrentPlugin, msg: bigint): bigint {
-        // console.error(plugin.read(msg)!.text());
-        // process.exit(1);
-        return BigInt(0);
-
-      }
     }
   };
 }
