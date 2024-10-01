@@ -1,0 +1,23 @@
+
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-example:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        env:
+          XTP_TOKEN: ${{ secrets.XTP_TOKEN }}
+          XTP_APP_ID: ${{ secrets.XTP_APP_ID }}
+          XTP_GUEST_KEY: me
