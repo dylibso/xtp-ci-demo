@@ -1,0 +1,7 @@
+spec:
+  inputs:
+    stage:
+      default: test
+---
+xtp-ci:
+  script: node ../dist/index.js
