@@ -9,6 +9,9 @@ inputs:
 #   time: # id of output
 #     description: 'The time we greeted you'
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: 'composite'
+  steps:
+    - name: XTP CI
+      run: |
+        node dist/index.js ${{ inputs.action }}
 
