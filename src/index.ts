@@ -60,7 +60,18 @@ function gitSha(platform: Platform): string {
     case Platform.Gitlab:
       return process.env.CI_COMMIT_SHA!;
     case Platform.Local:
-      return new TextDecoder().decode(spawnSync("git", ["rev-parse", "HEAD"]).stdout);
+      return new TextDecoder().decode(spawnSync("git", ["rev-parse", "HEAD"]).stdout).trim();
+  }
+}
+
+function gitBranch(platform: Platform): string {
+  switch (platform){
+    case Platform.Github:
+      return process.env.GITHUB_REF_NAME;
+    case Platform.Gitlab:
+      return process.env.CI_COMMIT_REF_NAME;
+    case Platform.Local:
+      return new TextDecoder().decode(spawnSync("git", ["rev-parse", "--abbrev-ref", "HEAD"]).stdout).trim();
   }
 }
 
@@ -70,15 +81,14 @@ async function run() {
   
   const platform = getPlatform();
 
-  console.log("PLATFORM", gitSha(platform));
-  
   const client = await createClient({
     appId: APP_ID,
     token: TOKEN,
     useWasi: true,
     config: {
       "GIT_SHA": gitSha(platform),
-      },
+      "GIT_BRANCH": gitBranch(platform),
+    },
     allowedPaths: {
       ".": "."
     },
