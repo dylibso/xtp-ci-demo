@@ -1,0 +1,21 @@
+{
+  "name": "xtp-ci",
+  "version": "0.1.0",
+  "description": "Utility to help run XTP on CI",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@dylibso/xtp": "^0.0.0-rc9",
+    "@extism/extism": "^2.0.0-rc8",
+    "dotenv": "^16.4.5"
+  }
+}
