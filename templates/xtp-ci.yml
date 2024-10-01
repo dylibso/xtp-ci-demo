@@ -5,4 +5,4 @@ spec:
 ---
 xtp-ci:
   image: node:latest
-  script: node dist/index.js $[[ inputs.stage ]]
+  script: node dist/index.js $[[ inputs.action ]]
