@@ -3,9 +3,9 @@ spec:
     action:
       default: checkRepo
     token:
-      default: $XTP_TOKEN
+      default: ${XTP_TOKEN}
     appId:
-      default: $XTP_APP_ID
+      default: ${XTP_APP_ID}
     guestKey:
       default: ""
 ---
