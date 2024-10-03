@@ -23,4 +23,3 @@ jobs:
           appId: ${{ secrets.XTP_APP_ID }}
           guestKey: me
           binding: find-file
-          args: index.ts
