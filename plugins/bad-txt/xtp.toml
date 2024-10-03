@@ -3,7 +3,7 @@ app_id = ""
 # This is where 'xtp plugin push' expects to find the wasm file after the build script has run.
 bin = "target/wasm32-wasi/release/plugin.wasm"
 extension_point_id = "ext_01j92q4ptpf1pbmm6hwgnht5wc"
-name = "basic"
+name = "bad-txt"
 
 [scripts]
 
