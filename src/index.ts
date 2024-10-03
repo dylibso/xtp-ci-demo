@@ -2,7 +2,7 @@ import process from 'process'
 
 import createClient from '@dylibso/xtp'
 
-import { GUEST_KEY, APP_ID, TOKEN, WORKING_DIR } from './env'
+import { GUEST_KEY, APP_ID, TOKEN, WORKING_DIR, BINDING } from './env'
 import { Repo } from './repo'
 import walk from 'ignore-walk'
 
@@ -63,7 +63,7 @@ async function call(f: any, repo: Repo, file?: string) {
   }
 
   try {
-    const res = await f(GUEST_KEY, JSON.stringify(info), {default: defaultResult});
+    const res = await f(GUEST_KEY, JSON.stringify(info), {default: defaultResult, bindingName: BINDING});
     if (res.status === Status.Fail){
       console.error(res.message);
       process.exit(1);

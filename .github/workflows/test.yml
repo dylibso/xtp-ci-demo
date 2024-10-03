@@ -22,3 +22,4 @@ jobs:
           token: ${{ secrets.XTP_TOKEN }}
           appId: ${{ secrets.XTP_APP_ID }}
           guestKey: me
+          binding: find-file

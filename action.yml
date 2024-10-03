@@ -15,15 +15,23 @@ inputs:
     description: XTP guest key
     required: true
     default: ""
+  binding:
+    description: XTP binding name
+    required: true
+    default: ""
+  args:
+    description: Arguments to be passed to plugin
+    required: false
 runs:
   using: 'composite'
   steps:
     - name: XTP CI
       shell: bash
       run: |
-        node dist/index.js ${{ inputs.action }}
+        node dist/index.js ${{ inputs.action }} ${{ inputs.args }}
       env:
         XTP_TOKEN: ${{ inputs.token }}
         XTP_APP_ID: ${{ inputs.appId }}
         XTP_GUEST_KEY: ${{ inputs.guestKey }}
+        XTP_BINDING_NAME: $ {{ inputs.binding }}
 

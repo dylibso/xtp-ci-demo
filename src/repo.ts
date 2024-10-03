@@ -65,11 +65,13 @@ export class Repo {
   platform: Platform
   sha: string
   branch: string
+  args: string[]
 
   constructor() {
     this.platform = getPlatform();
     this.sha = gitSha(this.platform);
     this.branch = gitBranch(this.platform);
+    this.args = process.argv.slice(3);
   }
 
   
@@ -84,7 +86,7 @@ export class Repo {
   }
 
   info(): object {
-    return {sha: this.sha, branch: this.branch};
+    return {sha: this.sha, branch: this.branch, args: this.args};
   }
 
   infoWithFile(filename: string): object {

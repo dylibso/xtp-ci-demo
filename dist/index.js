@@ -7,10 +7,11 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.WORKING_DIR = exports.GUEST_KEY = exports.TOKEN = exports.APP_ID = void 0;
+exports.WORKING_DIR = exports.GUEST_KEY = exports.BINDING = exports.TOKEN = exports.APP_ID = void 0;
 __nccwpck_require__(2874);
 exports.APP_ID = process.env.XTP_APP_ID;
 exports.TOKEN = process.env.XTP_TOKEN;
+exports.BINDING = process.env.XTP_BINDING_NAME || "";
 exports.GUEST_KEY = process.env.XTP_GUEST_KEY || "me";
 exports.WORKING_DIR = process.env.WORKING_DIR || ".";
 
@@ -77,7 +78,7 @@ async function call(f, repo, file) {
         info = repo.infoWithFile(file);
     }
     try {
-        const res = await f(env_1.GUEST_KEY, JSON.stringify(info), { default: defaultResult });
+        const res = await f(env_1.GUEST_KEY, JSON.stringify(info), { default: defaultResult, bindingName: env_1.BINDING });
         if (res.status === Status.Fail) {
             console.error(res.message);
             process_1.default.exit(1);
@@ -164,10 +165,12 @@ class Repo {
     platform;
     sha;
     branch;
+    args;
     constructor() {
         this.platform = getPlatform();
         this.sha = gitSha(this.platform);
         this.branch = gitBranch(this.platform);
+        this.args = process_1.default.argv.slice(3);
     }
     getFunctions() {
         let funcs = getCommonFunctions();
@@ -179,7 +182,7 @@ class Repo {
         return funcs;
     }
     info() {
-        return { sha: this.sha, branch: this.branch };
+        return { sha: this.sha, branch: this.branch, args: this.args };
     }
     infoWithFile(filename) {
         const x = this.info();
