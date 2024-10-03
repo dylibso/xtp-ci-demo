@@ -33,5 +33,5 @@ runs:
         XTP_TOKEN: ${{ inputs.token }}
         XTP_APP_ID: ${{ inputs.appId }}
         XTP_GUEST_KEY: ${{ inputs.guestKey }}
-        XTP_BINDING_NAME: $ {{ inputs.binding }}
+        XTP_BINDING_NAME: ${{ inputs.binding }}
 
