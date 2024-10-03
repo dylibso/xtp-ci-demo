@@ -2,7 +2,17 @@ spec:
   inputs:
     action:
       default: checkRepo
+    token:
+      default: $XTP_TOKEN
+    appId:
+      default: $XTP_APP_ID
+    guestKey:
+      default: ""
 ---
 xtp-ci:
   image: node:latest
   script: node dist/index.js $[[ inputs.action ]]
+  variables:
+    XTP_TOKEN: $[[ inputs.token ]]
+    XTP_APP_ID: $[[ inputs.appId ]]
+    XTP_GUEST_KEY: $[[ inputs.guestKey ]]

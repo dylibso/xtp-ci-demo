@@ -19,7 +19,4 @@ jobs:
       - uses: ./
         with:
           action: checkRepo
-        env:
-          XTP_TOKEN: ${{ secrets.XTP_TOKEN }}
-          XTP_APP_ID: ${{ secrets.XTP_APP_ID }}
-          XTP_GUEST_KEY: me
+          guestKey: me
