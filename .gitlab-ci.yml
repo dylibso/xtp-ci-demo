@@ -1,5 +1,7 @@
 include:
   - component: $CI_SERVER_FQDN/$CI_PROJECT_PATH/xtp-ci@$CI_COMMIT_SHA  
     inputs:
+      token: $XTP_TOKEN
+      appId: $XTP_APP_ID
       guestKey: me
       binding: find-file
