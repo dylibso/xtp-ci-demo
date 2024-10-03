@@ -19,4 +19,6 @@ jobs:
       - uses: ./
         with:
           action: checkRepo
+          token: ${{ secrets.XTP_TOKEN }}
+          appId: ${{ secrets.XTP_APP_ID }}
           guestKey: me

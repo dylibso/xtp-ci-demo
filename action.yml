@@ -8,11 +8,9 @@ inputs:
   token:
     description: XTP token
     required: true
-    default: ${{ secrets.XTP_TOKEN }}o
   appId:
     description: XTP app ID
     required: true
-    default: ${{ secrets.XTP_APP_ID }}
   guestKey:
     description: XTP guest key
     required: true
