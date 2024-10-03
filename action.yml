@@ -22,6 +22,10 @@ inputs:
   args:
     description: Arguments to be passed to plugin
     required: false
+  workingDir:
+    description: Set the initial working directory
+    required: true
+    default: "."
 runs:
   using: 'composite'
   steps:
@@ -34,4 +38,5 @@ runs:
         XTP_APP_ID: ${{ inputs.appId }}
         XTP_GUEST_KEY: ${{ inputs.guestKey }}
         XTP_BINDING_NAME: ${{ inputs.binding }}
+        WORKING_DIR: ${{ inputs.workingDir }} 
 

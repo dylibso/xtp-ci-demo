@@ -12,6 +12,8 @@ spec:
       default: ""
     args:
       default: ""
+    workingDir:
+      default: "."
 ---
 xtp-ci:
   image: node:latest
@@ -21,3 +23,4 @@ xtp-ci:
     XTP_APP_ID: $[[ inputs.appId ]]
     XTP_GUEST_KEY: $[[ inputs.guestKey ]]
     XTP_BINDING_NAME: $[[ inputs.binding ]]
+    XTP_WORKING_DIR: $[[ inputs.workingDir ]]
