@@ -17,10 +17,10 @@ spec:
 ---
 xtp-ci:
   image: node:latest
-  script: node dist/index.js $[[ inputs.action ]] $[[ inputs.args ]]
-  variables:
-    XTP_TOKEN: $[[ inputs.token ]]
-    XTP_APP_ID: $[[ inputs.appId ]]
-    XTP_GUEST_KEY: $[[ inputs.guestKey ]]
-    XTP_BINDING_NAME: $[[ inputs.binding ]]
-    XTP_WORKING_DIR: $[[ inputs.workingDir ]]
+  script: |
+    XTP_TOKEN=$[[ inputs.token ]] \
+    XTP_APP_ID=$[[ inputs.appId ]] \
+    XTP_GUEST_KEY=$[[ inputs.guestKey ]] \
+    XTP_BINDING_NAME=$[[ inputs.bindingName ]] \
+    WORKING_DIR=$[[inputs.workingDir]] \
+    node dist/index.js $[[ inputs.action ]] $[[ inputs.args ]]
