@@ -7,7 +7,7 @@ A CI workflow using [XTP](https://www.getxtp.com/) and [Extism](https://github.c
 To use xtp-ci from Github actions, add the following to your workflow:
 
 ```
-- uses: dylibso/xtp-ci@main
+- uses: dylibso/xtp-ci-demo@main
   with:
     action: checkRepo
     token: ${{ secrets.XTP_TOKEN }}
