@@ -49,3 +49,14 @@ Then you can run:
 ```
 node dist/index.js {scanFiles|checkRepo}
 ```
+
+## Writing a plugin
+
+There are two different operations that can be implemented in a plugin.
+
+- `scanFiles` receives `RepoInfo` as input with `inputFile` populated, it will
+  be called once for each file. Returning an error `CheckResult` (where `result.status = "error"`)
+  will cause the action to fail.
+- `checkRepo` receives `RepoInfo` as input with no `inputFile` and is called once
+  for the entire repo. Like, `scanFiles` returning an error `CheckResult` will
+  cause the action to fail. 
