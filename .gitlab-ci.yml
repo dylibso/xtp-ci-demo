@@ -5,4 +5,4 @@ include:
       appId: $XTP_APP_ID
       guestKey: me
       binding: find-file
-      args: README.md
+      args: bad.txt
