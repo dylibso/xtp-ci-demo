@@ -38,5 +38,5 @@ runs:
         XTP_APP_ID: ${{ inputs.appId }}
         XTP_GUEST_KEY: ${{ inputs.guestKey }}
         XTP_BINDING_NAME: ${{ inputs.binding }}
-        WORKING_DIR: ${{ inputs.workingDir }} 
+        WORKING_DIR: ${{ inputs.workingDir }}
 
