@@ -4,5 +4,4 @@ include:
       token: $XTP_TOKEN
       appId: $XTP_APP_ID
       guestKey: me
-      binding: find-file
-      args: bad.txt
+      binding: bad-txt
